@@ -1,6 +1,11 @@
 package busrev;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+
 
 public class booking{
     static int bookid=1000;
@@ -18,14 +23,25 @@ public class booking{
         passangername = sc.nextLine();
         System.out.println("Enter BusNo:");
         busno = sc.nextInt();
-        System.out.println("Enter Date(dd-mm-yyyy):");
-        String stringdate = sc.next();
-        SimpleDateFormat dformant = new SimpleDateFormat("dd-MM-yyyy");
-        try{
-            date = dformant.parse(stringdate);
-        }catch(Exception e){
-            System.out.println("Invalid data format");
+        sc.nextLine();
+        
+        
+        
+
+        LocalDate date = null;
+
+        while (date == null) {
+            System.out.print("Enter Date (dd-MM-yyyy): ");
+            String input = sc.nextLine();
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                date = LocalDate.parse(input, formatter);
+                } 
+                catch (DateTimeParseException e) {
+                    System.out.println("Invalid date! Please enter correct date.");
+                    }
         }
+        
         assignseat(Bookings);
         assignfare(buses);
         System.out.println("Select seat(all odd number are windo seats):");
