@@ -17,6 +17,7 @@ public class bus{
         this.busfare = fare;
 
     }
+      
     public int getbusno(){
         return busno;
     }

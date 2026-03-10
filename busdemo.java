@@ -11,10 +11,10 @@ public class busdemo{
     public static void main(String[] args){
         ArrayList<bus> buses =new ArrayList<bus>();
         ArrayList<booking> Bookings = new ArrayList<booking>();
-        buses.add(new bus(101,"Trichy","Chennai",true,2,450));
-        buses.add(new bus(202,"Erode","Chennai",false,50,550));
-        buses.add(new bus(303,"Trichy","Bangalore",true,45,750));
-        buses.add(new bus(404,"chennai","thajarur",true,52,450));
+        buses.add(new bus(101,"Trichy(10:10pm)","Chennai(06:00am)",true,52,450));
+        buses.add(new bus(202,"coimbatore(08:00pm)","Chennai(05:30am)",false,50,550));
+        buses.add(new bus(303,"Trichy(05:00pm)","Bangalore(03:00am)",true,45,750));
+        buses.add(new bus(404,"chennai(07:00pm)","thajarur(05:00am)",true,52,450));
          
         
         int userinput = 0;
@@ -22,14 +22,14 @@ public class busdemo{
         String adminpassword = "507507";
         Scanner sc = new Scanner(System.in);
         while(userinput!=5){
-            System.out.println("========================================");
+            System.out.println("\n========================================\n");
             System.out.println("         Wlecome to Arief Travels       ");
             System.out.println("========================================");
-            System.out.println("1.book Ticket");
+            System.out.println("1.Book Ticket");
             System.out.println("2.View buses");
-            System.out.println("3.cancel booking");
+            System.out.println("3.Cancel booking");
             System.out.println("4.Admin login");
-            System.out.println("5. exit");
+            System.out.println("5.Exit");
             userinput = sc.nextInt();
             if(userinput == 1){
                 for(bus book : buses){
@@ -57,7 +57,7 @@ public class busdemo{
                     }
                     System.out.println("remaing seats:"+ (capacity - booked));
                 }else{
-                    System.out.println("Sorry.Bus is full.tryy another bus or date");
+                    System.out.println("Try again");
                     break;
                 }
                 }
@@ -99,28 +99,28 @@ public class busdemo{
                 String pass = sc.nextLine();
 
                 if(uname.equals(adminusername) && pass.equals(adminpassword)){
-                    System.out.println("login successfull:");
+                    System.out.println("Login successfull");
                     int adminchoice = 0;
                     while(adminchoice != 3){
-                        System.out.println("======Admin menu======");
+                        System.out.println("\n======Admin Menu======\n");
                         System.out.println("1.Add bus");
                         System.out.println("2.View booking");
-                        System.out.println("3. logout");
+                        System.out.println("3.logout");
                         adminchoice = sc.nextInt();
 
                         if(adminchoice == 1){
                             System.out.println("Enter Bus NO:");
                             int busno = sc.nextInt();
                             sc.nextLine();
-                            System.out.println("Enter Bus from:");
+                            System.out.println("Enter Bus From(name(time(am/pm)):");
                             String busfrom = sc.nextLine();
-                            System.out.println("Enter Bus To");
+                            System.out.println("Enter Bus To(name(time(am/pm)):");
                             String busto = sc.nextLine();
                             System.out.println("Enter Bus is Ac?(true/false):");
                             boolean busAc = sc.nextBoolean();
                             System.out.println("Enter Bus capacity:");
                             int buscap = sc.nextInt();
-                            System.out.println("Enter bus fear:");
+                            System.out.println("Enter Bus fear:");
                             int busfare = sc.nextInt();
 
                             buses.add(new bus(busno,busfrom,busto,busAc,buscap,busfare));
@@ -135,9 +135,11 @@ public class busdemo{
                             }
                         }
                     }
+                }else if(uname == adminusername && pass != adminpassword){
+                    System.out.println("Invaild  password");
                 }else{
-                System.out.println("Invaild username or password");
-            }
+                    System.out.println("worng  Username");
+                }
 
             }
             

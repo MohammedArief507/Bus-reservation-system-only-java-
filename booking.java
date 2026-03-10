@@ -15,19 +15,29 @@ public class booking{
     int bookingId;
     int busfare;
     int seatno;
+    String busfrom;
+    String busto;
+    
 
     booking(ArrayList<booking> Bookings,ArrayList<bus> buses){
         Scanner sc = new Scanner(System.in);
-        bookingId = bookid++;
-        System.out.println("Enter Passangername:");
+        bookid++;
+        bookingId = bookid;
+        System.out.print("Enter Passangername:");
         passangername = sc.nextLine();
-        System.out.println("Enter BusNo:");
-        busno = sc.nextInt();
+        boolean validbus = false;
+        while(!validbus){
+            try{
+                System.out.print("Enter Bus no:");
+                busno = sc.nextInt();
+                validbus = true;
+            }catch(Exception e){
+                System.out.println("Invalid bus no,try again");
+                sc.nextLine();
+            }
+        }
         sc.nextLine();
         
-        
-        
-
         LocalDate date = null;
 
         while (date == null) {
@@ -44,12 +54,14 @@ public class booking{
         
         assignseat(Bookings);
         assignfare(buses);
-        System.out.println("Select seat(all odd number are windo seats):");
+        displaybooking(buses);
+        
+        System.out.print("Select seat(all odd number are windo seats):");
         int selectseatno = sc.nextInt();
         if(isseatvaild(selectseatno, Bookings,buses)){
             seatno = selectseatno;
         }else{
-            System.out.println("seat not available..try another seat.");
+            System.out.print("seat not available..try another seat.");
             seatno =-1;
         }
 
@@ -71,6 +83,7 @@ public class booking{
             }
         }
     }
+    
     private boolean isseatvaild(int selectseatno,ArrayList<booking> Bookings,ArrayList<bus> buses){
         int capacity=0;
 
@@ -93,19 +106,41 @@ public class booking{
      }
     public boolean isavailable(ArrayList<booking> Bookings,ArrayList<bus> buses){
         int capacity = 0;
-        for(bus Bus:buses){
+        for(bus Bus : buses){
             if(Bus.getbusno() == busno){
                 capacity = Bus.buscapacity;
             }
         }
         int booked = 0;
         for(booking b : Bookings){
-            if(b.busno == busno && b.date.equals(date) ){
+            if(date !=null && b.date.equals(date) && b.busno == busno){
                 booked++;
             }
+            if(b.busno == busno && b.seatno == seatno && b.date.equals(date)){
+                System.out.println("seat is already booked");
+                return false;
+            }
         }
-        return booked<capacity?true:false;
+        if(booked < capacity){
+            return true;
+        }else{
+            System.out.println("bus full");
+            return false;
+        }
         
+        
+
+    }
+    public void displaybooking(ArrayList<bus> buses){
+        
+
+        for(bus Bus : buses){
+            if(Bus.getbusno() == busno){
+                busfrom = Bus.busfrom;
+                busto = Bus.busto;
+                break;
+            }
+        }
 
     }
     public void displayticket(){
@@ -117,11 +152,15 @@ public class booking{
         System.out.println("Bus no          :"+busno);
         System.out.println("Seat No         :"+seatno);
         System.out.println("Fare            :"+busfare);
+        System.out.println("Bus From        :"+busfrom);
+        System.out.println("Bus To          :"+busto);
+        System.out.println("========================================");
+        System.out.println("         Have a safe jonury...          ");
         System.out.println("========================================");
     }
+
     public void displaybooking(){
             System.out.println("Booking id:"+bookingId+" | Name: "+passangername+" | BusNO: "+busno +"| BUS fare:"+busfare );
-
         }
 
 }
